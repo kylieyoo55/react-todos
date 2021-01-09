@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TodoItem from "./TodoItem"
 
 
 function App() {
@@ -19,6 +20,13 @@ function handleClick(){
   setTodo(" ");
 ;}
  
+function deleteItem(id){
+  setTodos(p=>{
+    return p.filter((el,index) => {
+      return index !== id;
+    })
+  })
+}
 
 //<button onClick={() => setState([...state, "again"])}>Click me</button>
 //setTheArray(oldArray => [...oldArray, newElement]);
@@ -38,7 +46,12 @@ function handleClick(){
       </div>
       <div>
         <ul>
-   {todos.map((item)=><li>{item}</li>)}
+   {todos.map((el,index)=><TodoItem
+    item={el} 
+    onChecked={deleteItem}
+    key={index}
+    id={index}
+    />)}
         </ul>
       </div>
       
