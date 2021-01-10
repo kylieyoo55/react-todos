@@ -1,50 +1,52 @@
 import React, { useState } from "react";
-import TodoItem from "./TodoItem"
-import InputArea from "./InputArea"
-
+import List from "./List"
+import CreateItem from "./CreateItem"
 
 function App() {
+const [listArray,setListArray]=useState([]);
 
+  function addItem(todo){
+    setListArray(p=>[...p,todo])
+    
+  }
 
-const [todos,setTodos]=useState([]);
-
-  
-
-function handleClick(todo){
-  setTodos(p=> [...p,todo])
-;}
- 
-function deleteItem(id){
-  setTodos(p=>{
-    return p.filter((el,index) => {
-      return index !== id;
-    })
+  function itemDelete(id){
+return setListArray(
+  listArray.filter((el,index)=>{
+    return index !== id
   })
-}
+)}
 
-//<button onClick={() => setState([...state, "again"])}>Click me</button>
-//setTheArray(oldArray => [...oldArray, newElement]);
   return (
     <div className="container">
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
-     <InputArea 
-       clicked={handleClick}
-     />
+      <CreateItem 
+      onAdd={addItem}/>
       <div>
         <ul>
-   {todos.map((el,index)=><TodoItem
-    item={el} 
-    onChecked={deleteItem}
-    key={index}
-    id={index}
-    />)}
+
+        {listArray.map((el,index)=>{
+          return(
+            <List 
+            key={index}
+            id={index}
+            item={el}
+            onDelete={itemDelete}
+          />
+          )
+        })}
+          
         </ul>
       </div>
-      
     </div>
   );
 }
 
 export default App;
+
+//1. When new text is written into the input, its state should be saved.
+//2. When the add button is pressed, the current data in the input should be
+//added to an array.
+//3. The <ul> should display all the array items as <li>s
